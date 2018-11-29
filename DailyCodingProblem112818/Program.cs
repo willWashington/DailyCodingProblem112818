@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,34 +18,24 @@ namespace DailyCodingProblem112818
                 You can modify the input array in-place. 
              */
 
-            var arr = new int[] { };
-            List<int> answerList = new List<int>();
-
-            for (int i = 0; i < arr.Length; i++)
-            { //for every int in the array
-                int min = arr.Min(); //get the lowest number in the array
-                int minIndex = Array.IndexOf(arr, min); //find what index position the lowest number in the array is
-                int max = arr.Max(); //get the highest number in the array
-                int possibleAnswer = arr[i] + 1; //add 1 to the current array selection
-                if (possibleAnswer > 0 && !arr.Contains(possibleAnswer))
-                    //if possibleAnswer is:
-                        //positive (greater than 0) AND
-                        //is not in the original array
+            var arr = new int[] { -4, -3, -2, 1, 2, 3, 4, 7, 9, -8, 12, 34, 136, 40, 5, 6, 8, 10, 11, 14, 19};
+            int fin = 1;
+            int lastSum = int.MaxValue;
+            foreach (int num in arr)
+            {
+                int possibleSum = num + 1;
+                if (possibleSum < arr.Max() && !arr.Contains(possibleSum) && possibleSum > 0)
                 {
-                    answerList.Add(possibleAnswer);
-                } else
-                {
-                    Debug.WriteLine("incorrect algorithm");
+                    if (possibleSum <= lastSum)
+                    {
+                        lastSum = possibleSum;
+                    }
                 }
             }
-            //linq solution:
+            fin = lastSum < 0 ? 1 : lastSum;
+            // --^^-- ternary - set fin to 1 if lastSum < 0 or set fin to lastSum if fin is >= 0
 
-            if (answerList.Count == 0 || answerList.Aggregate((a, x) => a * x) < 0)
-            {
-                answerList.Add(1);
-            }
-            int finalAnswer = answerList.Min();
-            Debug.WriteLine(finalAnswer); //write it
+            Debug.WriteLine(fin);
         }
     }
 }
